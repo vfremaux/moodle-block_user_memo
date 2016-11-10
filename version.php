@@ -20,16 +20,17 @@
  * @package    block_user_memo
  * @category   blocks
  * @author     Valery Fremaux (valery.fremaux@gmail.com)
- * @copyright  2015 onwards Valery Fremaux (valery.fremaux@gmail.com)
+ * @copyright  1999 onwards Martin Dougiamas (http://dougiamas.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2015052701;        // The current plugin version (Date: YYYYMMDDXX).
-$plugin->requires  = 2016051900;        // Requires this Moodle version.
-$plugin->component = 'block_user_memo';      // Full name of the plugin (used for diagnostics).
-$plugin->maturity = MATURITY_RC;
+$plugin->version   = 2015052701;        // The current plugin version (Date: YYYYMMDDXX)
+$plugin->requires  = 2014050800;        // Requires this Moodle version
+$plugin->component = 'block_user_memo';      // Full name of the plugin (used for diagnostics)
+$plugin->release = "2.7.0 (Build 2015052701)";
+$plugin->maturity = MATURITY_STABLE;
 
 // Non moodle attributes.
-$plugin->codeincrement = '3.1.0000';
+$plugin->codeincrement = '2.7.0000';

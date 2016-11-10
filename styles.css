@@ -1,0 +1,38 @@
+.user-memo {
+    margin:2px;
+    padding:2px;
+    background-color:#F5FBC6;
+    border:1px solid #899B0B;
+}
+
+.user-memo-controls {
+    float:right;
+    height:15px;
+    padding:1px;
+}
+
+.user-memo-date {
+    font-size:0.8em;
+    opacity:0.6;
+    -moz-opacity:0.6;
+    padding-top:8px;
+}
+
+.user-memo-exporters{
+    margin-top:5px;
+}
+
+.user-memo-exporters *{
+    display:inline;
+}
+
+.user-memo-message {
+    opacity:50%;
+    -moz-opacity:50%;
+    padding:2px;
+    border:1px solid #a0a0a0;
+    font-style:italic;
+    border-radius:4px;
+    margin:3px;
+    font-size:0.9em;
+}

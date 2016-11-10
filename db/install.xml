@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="blocks/user_memo/db" VERSION="20150526" COMMENT="XMLDB file for Moodle blocks/user_memo"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="block_user_memo" COMMENT="block_user_memo table retrofitted from MySQL">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="9" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="blockid" TYPE="int" LENGTH="9" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="9" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="memo" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="9" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="sortorder" TYPE="int" LENGTH="9" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="index_id" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="block_user_ix" UNIQUE="false" FIELDS="blockid, userid"/>
+      </INDEXES>
+    </TABLE>
+  </TABLES>
+</XMLDB>

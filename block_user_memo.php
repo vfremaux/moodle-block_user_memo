@@ -28,18 +28,18 @@ require_once($CFG->dirroot.'/tag/lib.php');
 
 class block_user_memo extends block_base {
 
-    var $controllermessage = '';
+    protected $controllermessage = '';
 
     public function init() {
         $this->title = get_string('pluginname', 'block_user_memo');
     }
 
     public function applicable_formats() {
-        return array('all' => true);   // Needs work to make it work on tags MDL-11960
+        return array('all' => true);   // Needs work to make it work on tags MDL-11960.
     }
 
     public function specialization() {
-        global $CFG, $DB, $USER, $COURSE;
+        global $CFG;
 
         require_once($CFG->dirroot.'/blocks/user_memo/block_user_memo.controller.php');
         $controller = new block_user_memo_controller($this);
@@ -84,7 +84,7 @@ class block_user_memo extends block_base {
      * @param int $userid the blog's owner
      * @param int $blockid the usermemo block instance
      */
-    static function export_to_blog($userid, $blockid) {
+    static public function export_to_blog($userid, $blockid) {
         global $COURSE, $DB, $USER;
 
         $memos = $DB->get_records('block_user_memo', array('blockid' => $blockid, 'userid' => $userid), 'sortorder');

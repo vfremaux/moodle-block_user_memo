@@ -25,7 +25,6 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-
 /**
  * Online users block data generator class
  *
@@ -44,8 +43,6 @@ class block_user_memo_generator extends testing_block_generator {
      */
     public function create_instance($record = null, array $options = null) {
         global $DB, $CFG;
-
-        require_once("$CFG->dirroot/mod/page/locallib.php");
 
         $this->instancecount++;
 

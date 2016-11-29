@@ -14,8 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * @package   block_user_memo
  * @category  blocks
@@ -23,13 +21,14 @@ defined('MOODLE_INTERNAL') || die();
  * @copyright 2015 Valery Fremaux
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+defined('MOODLE_INTERNAL') || die();
 
 class block_user_memo_renderer extends plugin_renderer_base {
 
-    var $theblock;
+    protected $theblock;
 
-    function render_content(&$theblock) {
-        global $DB, $USER, $CFG, $OUTPUT, $COURSE;
+    public function render_content(&$theblock) {
+        global $DB, $USER, $CFG, $COURSE;
 
         $this->theblock = $theblock;
 
@@ -49,7 +48,8 @@ class block_user_memo_renderer extends plugin_renderer_base {
         $str .= '<input type="submit" name="go_btn" value="'.get_string('addmemo', 'block_user_memo').'" />';
         $str .= '</form>';
 
-        $memos = $DB->get_records('block_user_memo', array('blockid' => $theblock->instance->id, 'userid' => $USER->id), 'sortorder');
+        $params = array('blockid' => $theblock->instance->id, 'userid' => $USER->id);
+        $memos = $DB->get_records('block_user_memo', $params, 'sortorder');
         if ($memos) {
             foreach ($memos as $memo) {
                 $str .= $this->render_memo($memo);
@@ -57,25 +57,28 @@ class block_user_memo_renderer extends plugin_renderer_base {
         }
 
         if ($CFG->enableblogs && has_capability('moodle/blog:view', $context) && $memos) {
-            $str .= $OUTPUT->box_start('user-memo-exporters');
-            $exporturl = new moodle_url(me(), array('id' => $COURSE->id, 'what' => 'exporttoblog', 'blockid' => $this->theblock->instance->id));
-            $str .= $OUTPUT->single_button($exporturl, get_string('exporttoblog', 'block_user_memo'));
+            $str .= $this->output->box_start('user-memo-exporters');
+            $params = array('id' => $COURSE->id, 'what' => 'exporttoblog', 'blockid' => $this->theblock->instance->id);
+            $exporturl = new moodle_url(me(), $params);
+            $str .= $this->output->single_button($exporturl, get_string('exporttoblog', 'block_user_memo'));
 
-            $clearurl = new moodle_url(me(), array('id' => $COURSE->id, 'what' => 'clearmemo', 'blockid' => $this->theblock->instance->id));
-            $str .= $OUTPUT->single_button($clearurl, get_string('clear'));
-            $str .= $OUTPUT->box_end();
+            $params = array('id' => $COURSE->id, 'what' => 'clearmemo', 'blockid' => $this->theblock->instance->id);
+            $clearurl = new moodle_url(me(), $params);
+            $str .= $this->output->single_button($clearurl, get_string('clear'));
+            $str .= $this->output->box_end();
         }
 
         return $str;
     }
 
-    function render_memo($memo) {
-        global $OUTPUT, $COURSE;
+    public function render_memo($memo) {
+        global $COURSE;
 
         $str = '';
 
-        $deleteurl = new moodle_url(new moodle_url('/course/view.php'), array('id' => $COURSE->id, 'what' => 'deletememo', 'memoid' => $memo->id));
-        $commands = '<a href="'.$deleteurl.'"><img src="'.$OUTPUT->pix_url('t/delete').'" /></a>';
+        $params = array('id' => $COURSE->id, 'what' => 'deletememo', 'memoid' => $memo->id);
+        $deleteurl = new moodle_url(new moodle_url('/course/view.php'), $params);
+        $commands = '<a href="'.$deleteurl.'"><img src="'.$this->output->pix_url('t/delete').'" /></a>';
 
         $str .= '<div class="user-memo">';
         $str .= '<div class="user-memo-controls">';

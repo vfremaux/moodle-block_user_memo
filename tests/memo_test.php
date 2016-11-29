@@ -47,7 +47,6 @@ class block_user_memo_memo_testcase extends advanced_testcase {
      * Setup often used objects for the following tests.
      */
     protected function setup() {
-        global $DB;
 
         $this->resetAfterTest();
 
@@ -67,9 +66,6 @@ class block_user_memo_memo_testcase extends advanced_testcase {
 
     public function test_memo() {
         global $DB, $CFG;
-
-        // Generate user data.
-        $user = $this->getDataGenerator()->create_user();
 
         $beforememos = $DB->count_records('block_user_memo', array());
 

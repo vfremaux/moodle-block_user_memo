@@ -14,8 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * @package   block_user_memo
  * @category  blocks
@@ -23,24 +21,25 @@ defined('MOODLE_INTERNAL') || die();
  * @copyright 2015 Valery Fremaux
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot.'/blog/locallib.php');
 require_once($CFG->dirroot.'/tag/lib.php');
 
 class block_user_memo extends block_base {
 
-    var $controllermessage = '';
+    protected $controllermessage = '';
 
-    function init() {
+    public function init() {
         $this->title = get_string('pluginname', 'block_user_memo');
     }
 
-    function applicable_formats() {
-        return array('all' => true);   // Needs work to make it work on tags MDL-11960
+    public function applicable_formats() {
+        return array('all' => true);   // Needs work to make it work on tags MDL-11960.
     }
 
-    function specialization() {
-        global $CFG, $DB, $USER, $COURSE;
+    public function specialization() {
+        global $CFG;
 
         require_once($CFG->dirroot.'/blocks/user_memo/block_user_memo.controller.php');
         $controller = new block_user_memo_controller($this);
@@ -49,19 +48,19 @@ class block_user_memo extends block_base {
         $controller->handle($action, $params);
     }
 
-    function instance_allow_multiple() {
+    public function instance_allow_multiple() {
         return false;
     }
 
-    function has_config() {
+    public function has_config() {
         return true;
     }
 
-    function instance_allow_config() {
+    public function instance_allow_config() {
         return true;
     }
 
-    function get_content() {
+    public function get_content() {
         global $PAGE;
 
         $this->content = new StdClass();
@@ -85,7 +84,7 @@ class block_user_memo extends block_base {
      * @param int $userid the blog's owner
      * @param int $blockid the usermemo block instance
      */
-    static function export_to_blog($userid, $blockid) {
+    static public function export_to_blog($userid, $blockid) {
         global $COURSE, $DB, $USER;
 
         $memos = $DB->get_records('block_user_memo', array('blockid' => $blockid, 'userid' => $userid), 'sortorder');
@@ -108,7 +107,7 @@ class block_user_memo extends block_base {
         $blogentry = new blog_entry(null, $params);
         $blogentry->add();
 
-        // purge old memo.
+        // Purge old memo.
         $DB->delete_records('block_user_memo', array('blockid' => $blockid, 'userid' => $USER->id));
     }
 }

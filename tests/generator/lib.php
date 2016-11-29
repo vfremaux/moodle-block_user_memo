@@ -42,7 +42,7 @@ class block_user_memo_generator extends testing_block_generator {
      * @return stdClass activity record with extra cmid field
      */
     public function create_instance($record = null, array $options = null) {
-        global $DB, $CFG;
+        global $DB;
 
         $this->instancecount++;
 

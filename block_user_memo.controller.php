@@ -83,7 +83,9 @@ class block_user_memo_controller {
         if ('clearmemo' == $action) {
             $todelete = array_shift($params);
             $DB->delete_records('block_user_memo', array('blockid' => $todelete, 'userid' => $userid));
-            if (!defined('PHPUNIT_TEST')) redirect(new moodle_url('/course/view.php', array('id' => $courseid)));
+            if (!defined('PHPUNIT_TEST')) {
+                redirect(new moodle_url('/course/view.php', array('id' => $courseid)));
+            }
         }
 
         if ('addmemo' == $action) {

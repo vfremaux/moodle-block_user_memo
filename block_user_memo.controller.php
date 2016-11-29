@@ -14,8 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * @package block_user_memo
  * @category  blocks
@@ -23,6 +21,7 @@ defined('MOODLE_INTERNAL') || die();
  * @copyright  2015 Valery Fremaux
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+defined('MOODLE_INTERNAL') || die();
 
 class block_user_memo_controller {
 
@@ -32,7 +31,12 @@ class block_user_memo_controller {
         $this->theblock = $theblock;
     }
 
-    function get_params($action) {
+    /**
+     * This is an early form of a controller, introducing testability.
+     * @TODO : unify controller signatures with more common practices
+     * @see local_shop controllers.
+     */
+    public function get_params($action) {
 
         $params = array();
 
@@ -40,12 +44,15 @@ class block_user_memo_controller {
             case 'deletememo':
                 $params[] = required_param('memoid', PARAM_INT);
                 break;
+
             case 'clearmemo':
                 $params[] = required_param('blockid', PARAM_INT);
                 break;
+
             case 'addmemo':
                 $params[] = required_param('memo', PARAM_CLEANHTML);
                 break;
+
             case 'exporttoblog':
                 $params[] = required_param('blockid', PARAM_INT);
                 break;
@@ -55,15 +62,19 @@ class block_user_memo_controller {
         return $params;
     }
 
-    function handle($action, $params, $userid = null, $courseid = null) {
+    public function handle($action, $params, $userid = null, $courseid = null) {
         global $DB, $USER, $COURSE;
 
-        if (empty($userid)) $userid = $USER->id;
-        if (empty($courseid)) $courseid = $COURSE->id;
+        if (empty($userid)) {
+            $userid = $USER->id;
+        }
+        if (empty($courseid)) {
+            $courseid = $COURSE->id;
+        }
 
         $context = context_block::instance($this->theblock->instance->id);
 
-        // Perform controller
+        // Perform controller.
         if ('deletememo' == $action) {
             $todelete = array_shift($params);
             $DB->delete_records('block_user_memo', array('id' => $todelete));
@@ -72,11 +83,14 @@ class block_user_memo_controller {
         if ('clearmemo' == $action) {
             $todelete = array_shift($params);
             $DB->delete_records('block_user_memo', array('blockid' => $todelete, 'userid' => $userid));
-            if (!defined('PHPUNIT_TEST')) redirect(new moodle_url('/course/view.php', array('id' => $courseid)));
+            if (!defined('PHPUNIT_TEST')) {
+                redirect(new moodle_url('/course/view.php', array('id' => $courseid)));
+            }
         }
 
         if ('addmemo' == $action) {
-            $lastorder = $DB->get_field('block_user_memo', 'MAX(sortorder)', array('blockid' => $this->theblock->instance->id, 'userid' => $userid));
+            $params = array('blockid' => $this->theblock->instance->id, 'userid' => $userid);
+            $lastorder = $DB->get_field('block_user_memo', 'MAX(sortorder)', $params);
             $lastorder = 0 + @$lastorder + 1;
             $newmemo = new StdClass;
             $newmemo->memo = array_shift($params);
@@ -85,7 +99,9 @@ class block_user_memo_controller {
             $newmemo->timecreated = time();
             $newmemo->sortorder = $lastorder;
             $memoid = $DB->insert_record('block_user_memo', $newmemo);
-            if (!defined('PHPUNIT_TEST')) redirect(new moodle_url('/course/view.php', array('id' => $courseid)));
+            if (!defined('PHPUNIT_TEST')) {
+                redirect(new moodle_url('/course/view.php', array('id' => $courseid)));
+            }
         }
 
         if ('exporttoblog' == $action) {
@@ -96,5 +112,4 @@ class block_user_memo_controller {
             }
         }
     }
-
 }

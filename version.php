@@ -15,13 +15,13 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version details
+ * Version details.
  *
- * @package    block_user_memo
- * @category   blocks
- * @author     Valery Fremaux (valery.fremaux@gmail.com)
- * @copyright  2015 onwards Valery Fremaux (valery.fremaux@gmail.com)
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package     block_user_memo
+ * @category    blocks
+ * @author      Valery Fremaux (valery.fremaux@gmeil.com)
+ * @copyright   2015 onwards Valery Fremaux (valery.fremaux@gmeil.com)
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
@@ -29,7 +29,8 @@ defined('MOODLE_INTERNAL') || die();
 $plugin->version   = 2015052701;        // The current plugin version (Date: YYYYMMDDXX).
 $plugin->requires  = 2016051900;        // Requires this Moodle version.
 $plugin->component = 'block_user_memo';      // Full name of the plugin (used for diagnostics).
-$plugin->maturity = MATURITY_RC;
+$plugin->release = "3.1.0 (Build 2015052701)";
+$plugin->maturity = MATURITY_STABLE;
 
 // Non moodle attributes.
-$plugin->codeincrement = '3.1.0000';
+$plugin->codeincrement = '3.1.0002';

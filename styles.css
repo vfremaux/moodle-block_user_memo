@@ -1,8 +1,8 @@
 .user-memo {
-    margin:2px;
-    padding:2px;
     background-color:#F5FBC6;
     border:1px solid #899B0B;
+    margin:2px;
+    padding:2px;
 }
 
 .user-memo-controls {
@@ -12,10 +12,10 @@
 }
 
 .user-memo-date {
-    font-size:0.8em;
-    opacity:0.6;
     -moz-opacity:0.6;
+    font-size:0.8em;
     padding-top:8px;
+    opacity:0.6;
 }
 
 .user-memo-exporters{
@@ -27,12 +27,12 @@
 }
 
 .user-memo-message {
-    opacity:50%;
     -moz-opacity:50%;
-    padding:2px;
-    border:1px solid #a0a0a0;
-    font-style:italic;
     border-radius:4px;
-    margin:3px;
+    border:1px solid #a0a0a0;
     font-size:0.9em;
+    font-style:italic;
+    margin:3px;
+    opacity:50%;
+    padding:2px;
 }

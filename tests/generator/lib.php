@@ -25,14 +25,6 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-/**
- * Online users block data generator class
- *
- * @package    block_user_memo
- * @category   test
- * @copyright  2012 Petr Skoda {@link http://skodak.org}
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
 class block_user_memo_generator extends testing_block_generator {
 
     /**

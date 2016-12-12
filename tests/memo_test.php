@@ -71,18 +71,24 @@ class block_user_memo_memo_testcase extends advanced_testcase {
 
         require_once($CFG->dirroot.'/blocks/user_memo/block_user_memo.controller.php');
         $controller = new block_user_memo_controller($this->blockinstance);
-        $params[] = "This is a test memo";
-        $controller->handle('addmemo', $params);
-        $params[] = "This is a test memo 2";
-        $controller->handle('addmemo', $params);
-        $params[] = "This is a test memo 3";
-        $controller->handle('addmemo', $params);
+
+        $params['memo'] = "This is a test memo";
+        $controller->receive('addmemo', $params);
+        $controller->process('addmemo');
+
+        $params['memo'] = "This is a test memo 2";
+        $controller->receive('addmemo', $params);
+        $controller->process('addmemo');
+
+        $params['memo'] = "This is a test memo 3";
+        $controller->receive('addmemo', $params);
+        $controller->process('addmemo');
 
         $this->assertEquals($beforememos + 3, $DB->count_records('block_user_memo', array()));
         $this->assertEquals(3, $DB->count_records('block_user_memo', array('blockid' => $this->blockinstance->instance->id)));
 
-        $params[] = $this->blockinstance->instance->id;
-        $controller->handle('clearmemo', $params);
+        // $controller->receive('clearmemo');
+        $controller->process('clearmemo');
 
         $this->assertEquals($beforememos, $DB->count_records('block_user_memo', array()));
         $this->assertEquals(0, $DB->count_records('block_user_memo', array('blockid' => $this->blockinstance->instance->id)));

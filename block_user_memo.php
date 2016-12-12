@@ -44,8 +44,8 @@ class block_user_memo extends block_base {
         require_once($CFG->dirroot.'/blocks/user_memo/block_user_memo.controller.php');
         $controller = new block_user_memo_controller($this);
         $action = optional_param('what', '', PARAM_TEXT);
-        $params = $controller->get_params($action);
-        $controller->handle($action, $params);
+        $controller->receive($action);
+        $controller->process($action);
     }
 
     public function instance_allow_multiple() {

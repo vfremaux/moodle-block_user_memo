@@ -27,6 +27,10 @@ class block_user_memo_controller {
 
     protected $theblock;
 
+    protected $data;
+
+    protected $received;
+
     public function __construct($theblock) {
         $this->theblock = $theblock;
     }
@@ -36,34 +40,42 @@ class block_user_memo_controller {
      * @TODO : unify controller signatures with more common practices
      * @see local_shop controllers.
      */
-    public function get_params($action) {
+    public function receive($cmd, $data = null) {
 
-        $params = array();
+        if (!empty($data)) {
+            // Data is fed from outside.
+            $this->data = (object)$data;
+            return;
+        } else {
+            $this->data = new \StdClass;
+        }
 
-        switch ($action) {
+        switch ($cmd) {
             case 'deletememo':
-                $params[] = required_param('memoid', PARAM_INT);
+                $this->data->memoid = required_param('memoid', PARAM_INT);
                 break;
 
             case 'clearmemo':
-                $params[] = required_param('blockid', PARAM_INT);
                 break;
 
             case 'addmemo':
-                $params[] = required_param('memo', PARAM_CLEANHTML);
+                $this->data->memo = required_param('memo', PARAM_CLEANHTML);
                 break;
 
             case 'exporttoblog':
-                $params[] = required_param('blockid', PARAM_INT);
                 break;
             default:
         }
 
-        return $params;
+        $this->received = true;
     }
 
-    public function handle($action, $params, $userid = null, $courseid = null) {
+    public function process($cmd, $userid = null, $courseid = null) {
         global $DB, $USER, $COURSE;
+
+        if (!$this->received) {
+            throw new \coding_exception('Data must be received in controller before operation. this is a programming error.');
+        }
 
         if (empty($userid)) {
             $userid = $USER->id;
@@ -75,25 +87,23 @@ class block_user_memo_controller {
         $context = context_block::instance($this->theblock->instance->id);
 
         // Perform controller.
-        if ('deletememo' == $action) {
-            $todelete = array_shift($params);
-            $DB->delete_records('block_user_memo', array('id' => $todelete));
+        if ('deletememo' == $cmd) {
+            $DB->delete_records('block_user_memo', array('id' => $this->data->memoid));
         }
 
-        if ('clearmemo' == $action) {
-            $todelete = array_shift($params);
-            $DB->delete_records('block_user_memo', array('blockid' => $todelete, 'userid' => $userid));
+        if ('clearmemo' == $cmd) {
+            $DB->delete_records('block_user_memo', array('blockid' => $this->theblock->instance->id, 'userid' => $userid));
             if (!defined('PHPUNIT_TEST')) {
                 redirect(new moodle_url('/course/view.php', array('id' => $courseid)));
             }
         }
 
-        if ('addmemo' == $action) {
-            $params = array('blockid' => $this->theblock->instance->id, 'userid' => $userid);
-            $lastorder = $DB->get_field('block_user_memo', 'MAX(sortorder)', $params);
+        if ('addmemo' == $cmd) {
+            $sqlparams = array('blockid' => $this->theblock->instance->id, 'userid' => $userid);
+            $lastorder = $DB->get_field('block_user_memo', 'MAX(sortorder)', $sqlparams);
             $lastorder = 0 + @$lastorder + 1;
             $newmemo = new StdClass;
-            $newmemo->memo = array_shift($params);
+            $newmemo->memo = $this->data->memo;
             $newmemo->userid = $userid;
             $newmemo->blockid = $this->theblock->instance->id;
             $newmemo->timecreated = time();
@@ -105,9 +115,8 @@ class block_user_memo_controller {
         }
 
         if ('exporttoblog' == $action) {
-            $blockid = array_shift($params);
             if (has_capability('moodle/blog:view', $context)) {
-                block_user_memo::export_to_blog($userid, $blockid);
+                block_user_memo::export_to_blog($userid, $this->theblock->instance->id);
                 $this->theblock->controllermessage = get_string('exportedtoblog', 'block_user_memo');
             }
         }

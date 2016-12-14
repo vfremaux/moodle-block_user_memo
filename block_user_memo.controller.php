@@ -114,7 +114,7 @@ class block_user_memo_controller {
             }
         }
 
-        if ('exporttoblog' == $action) {
+        if ('exporttoblog' == $cmd) {
             if (has_capability('moodle/blog:view', $context)) {
                 block_user_memo::export_to_blog($userid, $this->theblock->instance->id);
                 $this->theblock->controllermessage = get_string('exportedtoblog', 'block_user_memo');

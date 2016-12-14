@@ -28,7 +28,7 @@ require_once($CFG->dirroot.'/tag/lib.php');
 
 class block_user_memo extends block_base {
 
-    protected $controllermessage = '';
+    public $controllermessage = '';
 
     public function init() {
         $this->title = get_string('pluginname', 'block_user_memo');
@@ -53,7 +53,7 @@ class block_user_memo extends block_base {
     }
 
     public function has_config() {
-        return true;
+        return false;
     }
 
     public function instance_allow_config() {

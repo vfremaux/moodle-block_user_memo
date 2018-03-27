@@ -112,7 +112,7 @@ class provider implements \core_privacy\local\metadata\provider {
         }
         $userid = $contextlist->get_user()->id;
         foreach ($contextlist->get_contexts() as $ctx) {
-            $DB->delete_records('choice_answers', ['blockid' => $ctx->instanceid, 'userid' => $userid]);
+            $DB->delete_records('block_user_memo', ['blockid' => $ctx->instanceid, 'userid' => $userid]);
         }
     }
 }

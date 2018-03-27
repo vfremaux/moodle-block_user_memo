@@ -31,3 +31,8 @@ $string['exporttoblog'] = 'Export to my blog';
 $string['mynotes'] = 'My notes on course {$a}';
 $string['exportedtoblog'] = 'Your notes have been exported to your blog';
 $string['addmemo'] = 'Add';
+
+$string['privacy:metadata:user_memo'] = 'User personal memos in courses';
+$string['privacy:metadata:user_memo:userid'] = 'The ID of the memo\'s author';
+$string['privacy:metadata:user_memo:blockid'] = 'The ID of the block instance the memo is in';
+$string['privacy:metadata:user_memo:memo'] = 'The text of the memo';

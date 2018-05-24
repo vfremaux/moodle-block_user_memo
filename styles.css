@@ -1,38 +1,38 @@
 .user-memo {
-    background-color:#F5FBC6;
-    border:1px solid #899B0B;
-    margin:2px;
-    padding:2px;
+    background-color: #f5f8c6;
+    border: 1px solid #899b0b;
+    margin: 2px;
+    padding: 2px;
 }
 
 .user-memo-controls {
-    float:right;
-    height:15px;
-    padding:1px;
+    float: right;
+    height: 15px;
+    padding: 1px;
 }
 
 .user-memo-date {
-    -moz-opacity:0.6;
-    font-size:0.8em;
-    padding-top:8px;
-    opacity:0.6;
+    -moz-opacity: 0.6;
+    font-size: 0.8em;
+    padding-top: 8px;
+    opacity: 0.6;
 }
 
-.user-memo-exporters{
-    margin-top:5px;
+.user-memo-exporters {
+    margin-top: 5px;
 }
 
-.user-memo-exporters *{
-    display:inline;
+.user-memo-exporters * {
+    display: inline;
 }
 
 .user-memo-message {
-    -moz-opacity:50%;
-    border-radius:4px;
-    border:1px solid #a0a0a0;
-    font-size:0.9em;
-    font-style:italic;
-    margin:3px;
-    opacity:50%;
-    padding:2px;
+    -moz-opacity: 50%;
+    border-radius: 4px;
+    border: 1px solid #a0a0a0;
+    font-size: 0.9em;
+    font-style: italic;
+    margin: 3px;
+    opacity: 50%;
+    padding: 2px;
 }

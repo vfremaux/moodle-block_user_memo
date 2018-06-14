@@ -78,7 +78,7 @@ class block_user_memo_renderer extends plugin_renderer_base {
 
         $params = array('id' => $COURSE->id, 'what' => 'deletememo', 'memoid' => $memo->id);
         $deleteurl = new moodle_url(new moodle_url('/course/view.php'), $params);
-        $commands = '<a href="'.$deleteurl.'">'.$this->output->pix_icon('t/delete').'</a>';
+        $commands = '<a href="'.$deleteurl.'">'.$this->output->pix_icon('t/delete', get_string('delete'), 'moodle').'</a>';
 
         $str .= '<div class="user-memo">';
         $str .= '<div class="user-memo-controls">';

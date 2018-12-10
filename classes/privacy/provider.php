@@ -17,6 +17,7 @@
 namespace block_user_memo\privacy;
 
 use \core_privacy\local\request\writer;
+use \core_privacy\local\metadata\collection;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -89,6 +90,8 @@ class provider implements \core_privacy\local\metadata\provider {
             $memos = $DB->get_records('block_user_memo', $params, 'sortorder');
             $data = new StdClass;
             $data->memos = $memos;
+            $data->userid = transform::user($data->userid);
+            $data->timecreated = tranform::datetime($data->timecreated);
             $instance->export_data(null, $data);
         }
     }
